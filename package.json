@@ -1,0 +1,26 @@
+{
+  "name": "herokuRun",
+  "description": "run commands using heroku one-off dynos",
+  "version": "0.0.1",
+  "private": true,
+  "main": "lib/herokuRun.js",
+  "dependencies": {
+    "heroku-client": "x",
+    "merge": "^1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "x",
+    "mocha-jenkins-reporter": "x",
+    "should": "6.0.x",
+    "sinon": "v1.14.x"
+  },
+  "scripts": {
+    "test": "make -f Makefile test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amarczuk/herokuRun"
+  },
+  "author": "Adam Marczuk",
+  "license": "BSD"
+}
