@@ -1,6 +1,6 @@
 #Heroku Run
 
-Simple module that enables to run commands on one-off heroku dynos from within the node applications.
+Simple module that allows to run commands on one-off heroku dynos from within the node applications.
 
 ##How to nstall
 
@@ -24,7 +24,7 @@ runner.run( 'pwd && ls', function( err, logger ) {
         logger
             .on( 'connected', function( auth ) {
                	console.log( 'connected' );
-               	console.log( (auth) ? 'authorized', 'unauthorized' );
+               	console.log( (auth) ? 'authorized' : 'unauthorized' );
             })
             .on( 'data', function( data ) {
                  process.stdout.write( data.toString() );
