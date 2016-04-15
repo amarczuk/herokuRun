@@ -14,7 +14,10 @@ suite('EndToEnd Test for herokuRun', function () {
 
                 should.not.exist( err );
 
-                var fullData = '';
+                var fullData = '', 
+                    dataReceived = false, 
+                    connected = false;
+
                 logger
                     .on( 'connected', function( auth ) {
                         auth.should.be.true;
@@ -29,6 +32,42 @@ suite('EndToEnd Test for herokuRun', function () {
                         dataReceived.should.be.true;
                         fullData.should.containEql( 'rendezvous' );
                         fullData.should.containEql( '/app' );
+                        done();
+                    });
+            } );
+    });
+
+    test('runs bash on heroku one-off dyno and sends exit command', function (done) {
+        this.timeout(30000);
+
+        var runner = herokuRun( conf.heroku.token, conf.app );
+
+        runner.run( 'bash', function( err, logger ) {
+
+                should.not.exist( err );
+
+                var fullData = '', 
+                    dataReceived = false, 
+                    connected = false;
+
+                logger
+                    .on( 'connected', function( auth ) {
+                        auth.should.be.true;
+                        connected = true;
+                    })
+                    .on( 'data', function( data ) {
+                        fullData += data.toString();
+                        if ( !dataReceived && fullData.indexOf( '$' ) != -1 ) {
+                            dataReceived = true;
+                            logger.send( 'pwd && exit\u000D' );
+                        }
+                    })
+                    .on( 'end', function() {
+                        connected.should.be.true;
+                        dataReceived.should.be.true;
+                        fullData.should.containEql( 'rendezvous' );
+                        fullData.should.containEql( '/app' );
+                        fullData.should.containEql( 'exit' );
                         done();
                     });
             } );

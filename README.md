@@ -10,6 +10,8 @@ $ npm install herokuRun --save
 
 ##How to use
 
+Run simple command (_demo/command.js_):
+
 ``` javascript
 var herokuRun = require( 'herokuRun' ),
 	runner = herokuRun( 'token', 'my-app-name' );
@@ -31,6 +33,38 @@ runner.run( 'pwd && ls', function( err, logger ) {
             })
             .on( 'end', function() {
                 console.log( 'connection ended' );
+            });
+    } );
+``` 
+
+Run __bash__ end interact with dyno (_demo/bash.js_):
+
+``` javascript
+var herokuRun = require( 'herokuRun' ),
+	runner = herokuRun( 'token', 'my-app-name' );
+ 
+runner.run( 'bash', function( err, logger ) {
+ 
+        if ( err ) {
+        	console.log( err );
+        	return;
+        }
+ 
+        logger
+            .on( 'connected', function( auth ) {
+               	console.log( 'connected' );
+               	console.log( (auth) ? 'authorized' : 'unauthorized' );
+                process.stdin.on('data', function(chunk) {
+                    logger.send(chunk);
+                });
+
+            })
+            .on( 'data', function( data ) {
+                process.stdout.write( data.toString() );
+            })
+            .on( 'end', function() {
+                console.log( 'connection ended' );
+                process.stdin.end();
             });
     } );
 ``` 
