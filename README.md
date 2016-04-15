@@ -37,7 +37,7 @@ runner.run( 'pwd && ls', function( err, logger ) {
     } );
 ``` 
 
-Run __bash__ end interact with dyno (_demo/bash.js_):
+Run __bash__ and interact with dyno (_demo/bash.js_):
 
 ``` javascript
 var herokuRun = require( 'herokuRun' ),
