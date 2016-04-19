@@ -54,7 +54,7 @@ suite('Unit Test for herokuRunner', function () {
             
             should.equal( err, null );
             ( logger instanceof attachedOutput ).should.be.true;
-
+            delete logger;
             fakes.verify();
             done();
         });
