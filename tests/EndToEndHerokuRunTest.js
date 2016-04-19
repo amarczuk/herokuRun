@@ -5,7 +5,7 @@ var herokuRun = require( '../lib/herokuRun.js' ),
 nconf.argv().env().file( __dirname + '/conf/heroku.json' );
 
 suite('EndToEnd Test for herokuRun', function () {
-
+console.log(nconf.get( 'heroku:token' ));
   
     test('runs command on heroku one-off dyno', function (done) {
         this.timeout(20000);
