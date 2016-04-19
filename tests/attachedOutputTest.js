@@ -26,7 +26,9 @@ var createTLSServer = function( auth, message, input, callback ) {
             } else {
                 data.toString().should.equal( input );
                 setTimeout( function() {
-                    socket.end();
+                    try {
+                        socket.end();
+                    } catch(e) {};
                 }, 100 );
             }
         });
@@ -37,7 +39,9 @@ var createTLSServer = function( auth, message, input, callback ) {
 
         if ( !input ) {
             setTimeout( function() {
-                socket.end();
+                try {
+                    socket.end();
+                } catch(e) {};
             }, 200 );
         }
         
