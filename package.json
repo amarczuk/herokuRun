@@ -12,7 +12,8 @@
     "mocha": "x",
     "mocha-jenkins-reporter": "x",
     "should": "6.0.x",
-    "sinon": "v1.14.x"
+    "sinon": "v1.14.x",
+    "nconf": "^0.8.4"
   },
   "scripts": {
     "test": "make -f Makefile test"
@@ -22,5 +23,5 @@
     "url": "https://github.com/amarczuk/herokuRun"
   },
   "author": "Adam Marczuk",
-  "license": "BSD"
+  "license": "MIT"
 }
