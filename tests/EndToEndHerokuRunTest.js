@@ -5,12 +5,11 @@ var herokuRun = require( '../lib/herokuRun.js' ),
 nconf.argv().env().file( __dirname + '/conf/heroku.json' );
 
 suite('EndToEnd Test for herokuRun', function () {
-console.log(nconf.get(  ));
   
     test('runs command on heroku one-off dyno', function (done) {
         this.timeout(20000);
 
-        var runner = herokuRun( nconf.get( 'heroku:token' ), nconf.get( 'app' ) );
+        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ) );
 
         runner.run( 'pwd', function( err, logger ) {
 
@@ -42,7 +41,7 @@ console.log(nconf.get(  ));
     test('runs bash on heroku one-off dyno and sends exit command', function (done) {
         this.timeout(30000);
 
-        var runner = herokuRun( nconf.get( 'heroku:token' ), nconf.get( 'app' ) );
+        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ) );
 
         runner.run( 'bash', function( err, logger ) {
 
@@ -78,7 +77,7 @@ console.log(nconf.get(  ));
     test('errors when app does not exist', function (done) {
         this.timeout(20000);
 
-        var runner = herokuRun( nconf.get( 'heroku:token' ), 'iamnonexistingapp' );
+        var runner = herokuRun( nconf.get( 'herokutoken' ), 'iamnonexistingapp' );
 
         runner.run( 'pwd', function( err, logger ) {
                 should.not.exist( logger );
