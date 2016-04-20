@@ -113,7 +113,7 @@ suite('Unit Test for heroku attached log output', function () {
                     dataReceived = true;
                 })
                 .on( 'error', function( err ) {
-                    err.toLowerCase().replace( /_/g, ' ' ).message.should.containEql( 'unable to verify' );
+                    err.message.toLowerCase().replace( /_/g, ' ' ).should.containEql( 'unable to verify' );
                     connected.should.be.false;
                     dataReceived.should.be.false;
                     done();
