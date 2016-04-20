@@ -29,7 +29,7 @@ var createTLSServer = function( auth, message, input, callback ) {
                     try {
                         socket.end();
                     } catch(e) {};
-                }, 100 );
+                }, 150 );
             }
         });
 

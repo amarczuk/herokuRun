@@ -54,7 +54,7 @@ suite('Unit Test for herokuRunner', function () {
             
             should.equal( err, null );
             ( logger instanceof attachedOutput ).should.be.true;
-            delete logger;
+            logger.on( 'error', function( err ) {} );
             fakes.verify();
             done();
         });
@@ -121,7 +121,8 @@ suite('Unit Test for herokuRunner', function () {
             
             should.equal( err, null );
             ( logger instanceof attachedOutput ).should.be.true;
-
+            logger.on( 'error', function( err ) {} );
+            
             fakes.verify();
             done();
         });
