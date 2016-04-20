@@ -1,4 +1,4 @@
 {
-	"heroku" : { "token": "placeholder_for_valid_heroku_token" },
+	"herokutoken": "placeholder_for_valid_heroku_token",
 	"app": "placeholder_for_valid_heroku_app_name"
 }

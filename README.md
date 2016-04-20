@@ -1,6 +1,9 @@
 #Heroku Run
 
+[![Build Status](https://travis-ci.org/amarczuk/herokuRun.svg?branch=master)](https://travis-ci.org/amarczuk/herokuRun)
+
 Simple module that allows to run commands on one-off heroku dynos from within the node applications.
+May beused for task automation.
 
 ##How to nstall
 
@@ -37,7 +40,7 @@ runner.run( 'pwd && ls', function( err, logger ) {
     } );
 ``` 
 
-Run __bash__ and interact with dyno (_demo/bash.js_):
+Run ```bash``` and interact with dyno (_demo/bash.js_):
 
 ``` javascript
 var herokuRun = require( 'herokuRun' ),
@@ -76,7 +79,9 @@ Add heroku credentials to _tests/conf/heroku.json_ for end-to-end test to pass.
 
 ``` json
 {
-	"heroku" : { "token": "placeholder_for_valid_heroku_token" },
+	"herokutoken": "placeholder_for_valid_heroku_token",
 	"app": "placeholder_for_valid_heroku_app_name"
 }
 ``` 
+
+Run ```npm install && npm test```.
