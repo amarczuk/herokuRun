@@ -1,7 +1,7 @@
 {
   "name": "herokuRun",
   "description": "run commands using heroku one-off dynos",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "main": "lib/herokuRun.js",
   "dependencies": {
