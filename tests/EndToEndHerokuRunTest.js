@@ -9,7 +9,7 @@ suite('EndToEnd Test for herokuRun', function () {
     test('runs command on heroku one-off dyno', function (done) {
         this.timeout(20000);
 
-        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ) );
+        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ), { size: "free" } );
 
         runner.run( 'pwd', function( err, logger ) {
 
@@ -41,7 +41,7 @@ suite('EndToEnd Test for herokuRun', function () {
     test('runs bash on heroku one-off dyno and sends exit command', function (done) {
         this.timeout(30000);
 
-        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ) );
+        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ), { size: "free" } );
 
         runner.run( 'bash', function( err, logger ) {
 
