@@ -5,7 +5,7 @@
   "private": false,
   "main": "lib/herokuRun.js",
   "dependencies": {
-    "heroku-client": "x",
+    "heroku-client": "2.4.3",
     "merge": "^1.2.0"
   },
   "devDependencies": {
