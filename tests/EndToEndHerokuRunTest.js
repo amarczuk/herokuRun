@@ -38,6 +38,38 @@ suite('EndToEnd Test for herokuRun', function () {
             } );
     });
 
+    test('runs command on heroku one-off dyno - using promise', function (done) {
+        this.timeout(20000);
+
+        var runner = herokuRun( nconf.get( 'herokutoken' ), nconf.get( 'app' ), { size: "free" } );
+
+        runner.run( 'pwd' )
+            .then( function( logger ) {
+
+                var fullData = '', 
+                    dataReceived = false, 
+                    connected = false;
+
+                logger
+                    .on( 'connected', function( auth ) {
+                        auth.should.be.true;
+                        connected = true;
+                    })
+                    .on( 'data', function( data ) {
+                        fullData += data.toString();
+                        dataReceived = true;
+                    })
+                    .on( 'end', function() {
+                        connected.should.be.true;
+                        dataReceived.should.be.true;
+                        fullData.should.containEql( 'rendezvous' );
+                        fullData.should.containEql( '/app' );
+                        done();
+                    });
+            } )
+            .catch( done );
+    });
+
     test('runs bash on heroku one-off dyno and sends exit command', function (done) {
         this.timeout(30000);
 

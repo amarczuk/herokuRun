@@ -40,6 +40,39 @@ runner.run( 'pwd && ls', function( err, logger ) {
     } );
 ``` 
 
+or using Promise (since 0.0.7):
+
+``` javascript
+var herokuRun = require( 'herokuRun' ),
+    runner = herokuRun( 'token', 'my-app-name' );
+
+runner.run( 'pwd && ls' )
+    .then( function( logger ) {
+
+        return new Promise( function( resolve, reject ) {
+            logger
+                .on( 'connected', function( auth ) {
+                    console.log( 'connected' );
+                    console.log( (auth) ? 'authorized' : 'unauthorized' );
+                })
+                .on( 'data', function( data ) {
+                     process.stdout.write( data.toString() );
+                })
+                .on( 'end', function() {
+                    console.log( 'connection ended' );
+                    resolve();
+                });
+        } );
+        
+    } )
+    .then( function() {
+        // do something more...
+    } )
+    .catch( function( err ) ) {
+        console.log( err );
+    });
+``` 
+
 Run ```bash``` and interact with dyno (_demo/bash.js_):
 
 ``` javascript

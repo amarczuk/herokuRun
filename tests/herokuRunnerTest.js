@@ -61,6 +61,46 @@ suite('Unit Test for herokuRunner', function () {
         
     });
 
+    test('run creates connection and returns attached output - using promise', function (done) {
+        
+        var herokuMock = new heroku();
+        var size = 'dyno-size';
+        var options = {
+            env : { LINES : "40" }
+        }
+        var cmd = 'runme';
+        var app = 'appname';
+        var info = {
+            attach_url: 'http://localhost:10101'
+        }
+        var herokuFake = fakes.mock( herokuMock );
+
+        herokuFake.expects( 'apps' ).once().withArgs( app ).returnsThis();
+        herokuFake.expects( 'dynos' ).once().returnsThis();
+        herokuFake.expects( 'create' ).once().withArgs( sinon.match( {
+            attach: true,
+            command: cmd,
+            env: {
+                COLUMNS: "80",
+                LINES: options.env.LINES
+            },
+            size: size
+        } ) ).yields( null, info );
+
+        var runner = new herokuRunner( herokuMock, app, options );
+
+        runner.run( cmd, size )
+            .then( function( logger ) {
+            
+                ( logger instanceof attachedOutput ).should.be.true;
+                logger.on( 'error', function( err ) {} );
+                fakes.verify();
+                done();
+            })
+            .catch( done );
+        
+    });
+
     test('run errors when command is missing', function (done) {
         
         var herokuMock = new heroku();
@@ -87,6 +127,38 @@ suite('Unit Test for herokuRunner', function () {
             fakes.verify();
             done();
         });
+        
+    });
+
+    test('run errors when command is missing - using promise', function (done) {
+        
+        var herokuMock = new heroku();
+        var size = 'dyno-size';
+        var options = {
+            env : { LINES : "40" }
+        }
+        var cmd = 'runme';
+        var app = 'appname';
+        var info = {
+            attach_url: 'http://localhost:10101'
+        }
+        var herokuFake = fakes.mock( herokuMock );
+
+        herokuFake.expects( 'apps' ).never();
+
+        var runner = new herokuRunner( herokuMock, app, options );
+
+        runner.run( null, size )
+            .then( function( logger ) {
+                should.equal( false, 'Error expected' );
+                done();
+            })
+            .catch( function( err ) {
+                err.message.should.equal( 'Command not specified' );
+
+                fakes.verify();
+                done();
+            });
         
     });
 
